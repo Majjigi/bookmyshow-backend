@@ -1,0 +1,10 @@
+# Ignore build artifacts
+dist
+build
+coverage
+*.env
+.env
+.env.*
+
+# Ignore dependency directory
+node_modules
