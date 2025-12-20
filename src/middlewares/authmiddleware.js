@@ -31,4 +31,27 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
   }
 });
 
+/**
+ * Higher-order middleware to check if the user has the required role
+ * @param {...string} allowedRoles - The roles permitted to access the route
+ */
+const authorizeRoles = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized: User not identified" });
+    }
+
+    if (!allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({
+        message: `Forbidden: Access denied for role '${req.user.role}'`,
+      });
+    }
+
+    next();
+  };
+};
+
+export { verifyJWT, authorizeRoles };
 export default verifyJWT;

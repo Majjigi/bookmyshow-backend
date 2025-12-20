@@ -23,14 +23,16 @@ const generateAccessAndRefereshTokens = async (userId) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { firstName, lastName, emailID, password } = req.body;
+  const { firstName, lastName, emailID, password, role } = req.body;
   console.log("emailID: ", emailID);
+  console.log("role: ", role);
 
   if (
-    [firstName, lastName, emailID, password].some(
+    [firstName, lastName, emailID, password, role].some(
       (field) => field?.trim() === ""
     )
   ) {
+  } else if (!firstName || !lastName || !emailID || !password || !role) {
     throw new ApiError(400, "All fields are required");
   }
 
@@ -47,6 +49,7 @@ const registerUser = asyncHandler(async (req, res) => {
     lastName,
     emailID,
     password,
+    role,
   });
 
   const createdUser = await User.findById(user._id).select(
@@ -63,11 +66,11 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  const { emailID, firstName, lastName, password } = req.body;
+  const { emailID, firstName, lastName, password, role } = req.body;
   console.log(emailID);
 
-  if (!firstName && !emailID) {
-    throw new ApiError(400, "firstName or emailID is required");
+  if (!firstName && !emailID && !role) {
+    throw new ApiError(400, "firstName or emailID and role is required");
   }
 
   const user = await User.findOne({
@@ -225,6 +228,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
         firstName,
         lastName,
         emailID,
+        role,
       },
     },
     { new: true }

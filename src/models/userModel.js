@@ -2,6 +2,13 @@ import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+export const UserRoles = {
+  USER: "USER",
+  PARTNER: "PARTNER",
+  ADMIN: "ADMIN",
+  SUPERADMIN: "SUPERADMIN",
+};
+
 const userSchema = new Schema(
   {
     firstName: {
@@ -24,6 +31,17 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+    },
+    role: {
+      type: String,
+      enum: Object.values(UserRoles),
+      default: UserRoles.USER,
+      required: true,
+    },
+    // Useful for Partners to link to their specific Cinema/Venue
+    venueId: {
+      type: Schema.Types.ObjectId,
+      ref: "Venue"
     },
   },
   { timestamps: true }

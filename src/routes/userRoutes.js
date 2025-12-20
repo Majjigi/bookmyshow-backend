@@ -8,7 +8,7 @@ import {
   getCurrentUser,
   updateAccountDetails,
 } from "../controllers/userController.js";
-import verifyJWT from "../middlewares/authmiddleware.js";
+import verifyJWT from "../middlewares/authMiddleware.js";
 
 const router = Router();
 

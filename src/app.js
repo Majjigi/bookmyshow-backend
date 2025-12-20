@@ -18,8 +18,14 @@ app.use(cookieParser());
 
 //routes import
 import userRouter from "./routes/userRoutes.js";
+import movieRouter from "./routes/movieRoutes.js";
+import venueRouter from "./routes/venueRoutes.js";
+import showRouter from "./routes/showRoutes.js";
 
 //routes declaration
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/movies", movieRouter);
+app.use("/api/v1/venues", venueRouter);
+app.use("/api/v1/shows", showRouter);
 
 export default app;
