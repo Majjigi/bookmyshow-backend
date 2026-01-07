@@ -9,7 +9,7 @@ const router = Router();
  * PUBLIC ROUTES
  * Anyone can browse and view movie details
  */
-router.get("/", movieController.listMovies);
+// router.get("/", movieController.listMovies);
 router.get("/:id", movieController.getMovieDetails);
 
 /**
@@ -35,6 +35,11 @@ router.delete(
   verifyJWT,
   authorizeRoles(UserRoles.ADMIN, UserRoles.SUPERADMIN),
   movieController.removeMovie
+);
+
+router.post(
+  "/listMovies",
+  movieController.listMovies
 );
 
 export default router;
